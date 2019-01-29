@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.329
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulkLove.Core", "BulkLove.Core\BulkLove.Core.csproj", "{270CBB00-ABBE-43A9-B00F-69A4008ABB6C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thanks.NET.Core", "Thanks.NET.Core\ThanksNET.Core.csproj", "{270CBB00-ABBE-43A9-B00F-69A4008ABB6C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulkLove.ConsoleApp", "BulkLove.ConsoleApp\BulkLove.ConsoleApp.csproj", "{BC925DB2-4C4B-4049-AC3E-A5F048528721}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thanks.NET.ConsoleApp", "Thanks.NET.ConsoleApp\ThanksNET.ConsoleApp.csproj", "{BC925DB2-4C4B-4049-AC3E-A5F048528721}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

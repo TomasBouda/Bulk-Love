@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BulkLove.Core\BulkLove.Core.csproj" />
+    <ProjectReference Include="..\Thanks.NET.Core\ThanksNET.Core.csproj" />
   </ItemGroup>
 
 </Project>

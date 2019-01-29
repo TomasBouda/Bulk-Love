@@ -1,10 +1,10 @@
-﻿using BulkLove.Core.IO;
-using BulkLove.Core.Nuget;
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using ThanksNET.Core.IO;
+using ThanksNET.Core.Nuget;
 
-namespace BulkLove.ConsoleApp
+namespace ThanksNET.ConsoleApp
 {
 	internal class Program
 	{
@@ -18,6 +18,8 @@ namespace BulkLove.ConsoleApp
 			{
 				Console.WriteLine(r?.ProjectUrl);
 			}
+
+			Console.ReadKey();
 		}
 	}
 }

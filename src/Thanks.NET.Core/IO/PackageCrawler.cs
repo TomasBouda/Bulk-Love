@@ -1,9 +1,9 @@
-﻿using NuGet;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using ThanksNET.Core.Nuget;
 
-namespace BulkLove.Core.IO
+namespace ThanksNET.Core.IO
 {
 	public class PackageCrawler
 	{
@@ -14,8 +14,8 @@ namespace BulkLove.Core.IO
 
 			foreach (var file in packageFiles)
 			{
-				var packageRefFile = new PackageReferenceFile(file);
-				references.AddRange(packageRefFile.GetPackageReferences());
+				var packageRefFile = new PackagesFile(file);
+				references.AddRange(packageRefFile.PackageReferences);
 			}
 
 			return references.Distinct();
