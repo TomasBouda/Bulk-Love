@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using ThanksNET.Core.Nuget;
+using ThanksNET.Core.Extensions;
+using ThanksNET.Core.Nuget.Packages;
 
 namespace ThanksNET.Core.IO
 {
@@ -18,7 +19,7 @@ namespace ThanksNET.Core.IO
 				references.AddRange(packageRefFile.PackageReferences);
 			}
 
-			return references.Distinct();
+			return references.Distinct(new InlineComparer<PackageReference>((t1, t2) => t1.Id == t2.Id && t1.Version == t2.Version, r => r.GetHashCode()));
 		}
 	}
 }
