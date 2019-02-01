@@ -3,7 +3,7 @@ using Serilog.Core;
 
 namespace ThanksNET.Core.Logging
 {
-	public class NugetLogger : ILogger
+	internal class NugetLogger : ILogger
 	{
 		private Logger _logger;
 

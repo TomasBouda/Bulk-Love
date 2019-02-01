@@ -6,7 +6,7 @@ namespace ThanksNET.Core.Github
 {
 	public class GithubWrapper
 	{
-		public const string RGX_GITHUB_REPO = @"http[s]?://github.com/(?<owner>(\w|\.|-)+)/(?<repoName>(\w|\.|-)+)";
+		internal const string RGX_GITHUB_REPO = @"http[s]?://github.com/(?<owner>(\w|\.|-)+)/(?<repoName>(\w|\.|-)+)";
 
 		private GitHubClient GitHubClient { get; }
 
