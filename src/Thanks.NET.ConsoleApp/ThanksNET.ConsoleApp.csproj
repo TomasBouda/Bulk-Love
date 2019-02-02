@@ -4,6 +4,15 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <LangVersion>7.3</LangVersion>
+    <Product>ThanksNET</Product>
+    <Company>Tomáš Bouda</Company>
+    <Authors>Tomáš Bouda</Authors>
+    <PackageId>ThanksNET.ConsoleApp</PackageId>
+    <Description>Thanks.NET allows you to easily thank authors of packages you are using by staring their github repository.</Description>
+    <PackageProjectUrl>https://github.com/TomasBouda/Thanks.NET</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/TomasBouda/Thanks.NET/blob/master/LICENSE</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/TomasBouda/Thanks.NET</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
