@@ -1,5 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Serilog;
+using Serilog.Core;
+using Serilog.Formatting.Json;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using ThanksNET.Core.Github;
@@ -21,21 +23,38 @@ namespace ThanksNET.Core
 
 		#endregion ASCII
 
+		private Logger _fileLogger;
 		private GithubWrapper Github { get; }
 
 		public GrouppedPackages GrouppedPackages { get; private set; }
 
 		public PackageHandler(string githubToken)
 		{
+			_fileLogger = new LoggerConfiguration()
+				.MinimumLevel.Information()
+				.WriteTo.RollingFile(new JsonFormatter(renderMessage: true), "log.json")
+				.CreateLogger();
+
 			Github = new GithubWrapper(githubToken);
 		}
 
+		/// <summary>
+		/// Returns all packages in given solution directory
+		/// </summary>
+		/// <param name="solutionDirectory"></param>
+		/// <returns></returns>
 		public static async Task<GrouppedPackages> GetAllPackages(string solutionDirectory)
 		{
 			var packages = PackageCrawler.Crawl(solutionDirectory);
 			return await GrouppedPackages.FromPackageRefAsync(packages);
 		}
 
+		/// <summary>
+		/// Stars package github repository
+		/// </summary>
+		/// <param name="package"></param>
+		/// <param name="githubToken"></param>
+		/// <returns></returns>
 		public static async Task<bool> StarPackage(PackageReference package, string githubToken)
 		{
 			if ((package.Metadata?.HasGithub == false && package.Metadata?.HasParsedGithub == false) || string.IsNullOrEmpty(package.Metadata?.GithubUrl))
@@ -45,6 +64,11 @@ namespace ThanksNET.Core
 			return await github.StarRepo(package.Metadata.GithubUrl);
 		}
 
+		/// <summary>
+		/// Stars package github repository
+		/// </summary>
+		/// <param name="package"></param>
+		/// <returns></returns>
 		public async Task<bool> StarPackage(PackageReference package)
 		{
 			if ((package.Metadata?.HasGithub == false && package.Metadata?.HasParsedGithub == false) || string.IsNullOrEmpty(package.Metadata?.GithubUrl))
@@ -54,13 +78,14 @@ namespace ThanksNET.Core
 		}
 
 		/// <summary>
-		/// Finds all packages in given solution direcotry, gets their github url from nuget.org. If there is no github url, then tryes to find it on project website.
+		/// Finds all packages in given solution direcotry, gets their github repository url from nuget.org(if there is no github url, then tryes to find it on project website) and stars them
 		/// </summary>
 		/// <param name="solutionDirectory"></param>
 		/// <returns></returns>
 		public async Task StarAllAsync(string solutionDirectory)
 		{
-			Console.OutputEncoding = System.Text.Encoding.UTF8;
+			_fileLogger.Information($"Solution: {solutionDirectory}");
+
 			Console.ForegroundColor = ConsoleColor.Blue;
 			Console.WriteLine(TITLE_ASCII);
 			Console.WriteLine("-----------------------------------------------------");
@@ -70,44 +95,56 @@ namespace ThanksNET.Core
 
 			Console.WriteLine($"{GrouppedPackages.All.Count()} found");
 
-			Console.ForegroundColor = ConsoleColor.Green;
-			Console.WriteLine($"These packages({GrouppedPackages.WithGithub.Count()}) have github url:{Environment.NewLine}");
-			foreach (var package in GrouppedPackages.WithGithub)
+			if (GrouppedPackages.WithGithub.Count() > 0)
 			{
-				Console.Write(await StarPackage(package) ? "* " : "x ");
+				Console.ForegroundColor = ConsoleColor.Green;
+				Console.WriteLine($"These packages({GrouppedPackages.WithGithub.Count()}) have github url:{Environment.NewLine}");
+				foreach (var package in GrouppedPackages.WithGithub)
+				{
+					bool stared = await StarPackage(package);
 
-				Console.WriteLine($"{package.Metadata.Title} {package.Version} - {package.Metadata.GithubUrl}");
+					Console.WriteLine($"{(stared ? "*" : "x")} {package.Metadata.Title} {package.Version} - {package.Metadata.GithubUrl}");
+					_fileLogger.Information($"{(stared ? "*" : "x")} {package.Metadata.Title} {package.Version} - {package.Metadata.GithubUrl}");
+				}
 			}
 
-			Console.WriteLine("-----------------------------------------------------");
-			Console.ForegroundColor = ConsoleColor.DarkGreen;
-			Console.WriteLine($"We found github url for these packages({GrouppedPackages.WithParsedGithub.Count()}) on their project website:{Environment.NewLine}");
-			foreach (var package in GrouppedPackages.WithParsedGithub)
+			if (GrouppedPackages.WithParsedGithub.Count() > 0)
 			{
-				Console.Write(await StarPackage(package) ? "* " : "x ");
+				Console.WriteLine("-----------------------------------------------------");
+				Console.ForegroundColor = ConsoleColor.DarkGreen;
+				Console.WriteLine($"We found github url for these packages({GrouppedPackages.WithParsedGithub.Count()}) on their project website:{Environment.NewLine}");
+				foreach (var package in GrouppedPackages.WithParsedGithub)
+				{
+					bool stared = await StarPackage(package);
 
-				Console.WriteLine($"{package.Metadata.Title} {package.Version} - {package.Metadata.GithubUrl} - {package.Metadata.ProjectUrl}");
+					Console.WriteLine($"{(stared ? "*" : "x")} {package.Metadata.Title} {package.Version} - {package.Metadata.GithubUrl} - {package.Metadata.ProjectUrl}");
+					_fileLogger.Information($"{(stared ? "*" : "x")} {package.Metadata.Title} {package.Version} - {package.Metadata.GithubUrl} - {package.Metadata.ProjectUrl}");
+				}
 			}
 
-			Console.WriteLine("-----------------------------------------------------");
-			Console.ForegroundColor = ConsoleColor.Yellow;
-			Console.WriteLine($"We couldn't find github url for these packages({GrouppedPackages.WithoutGithub.Count()}):{Environment.NewLine}");
-			foreach (var package in GrouppedPackages.WithoutGithub)
+			if (GrouppedPackages.WithoutGithub.Count() > 0)
 			{
-				Console.WriteLine($"{package.Metadata.Title} {package.Version} - {package.Metadata.ProjectUrl}");
+				Console.WriteLine("-----------------------------------------------------");
+				Console.ForegroundColor = ConsoleColor.Yellow;
+				Console.WriteLine($"We couldn't find github url for these packages({GrouppedPackages.WithoutGithub.Count()}):{Environment.NewLine}");
+				foreach (var package in GrouppedPackages.WithoutGithub)
+				{
+					Console.WriteLine($"{package.Metadata.Title} {package.Version} - {package.Metadata.ProjectUrl}");
+					_fileLogger.Information($"{package.Metadata.Title} {package.Version} - {package.Metadata.ProjectUrl}");
+				}
 			}
 
-			Console.WriteLine("-----------------------------------------------------");
-			Console.ForegroundColor = ConsoleColor.Red;
-			Console.WriteLine($"We couldn't find any information about these packages({GrouppedPackages.WithNoMetadata.Count()}):{Environment.NewLine}");
-			foreach (var package in GrouppedPackages.WithNoMetadata)
+			if (GrouppedPackages.WithNoMetadata.Count() > 0)
 			{
-				Console.WriteLine($"{package.Id} {package.Version}");
+				Console.WriteLine("-----------------------------------------------------");
+				Console.ForegroundColor = ConsoleColor.Red;
+				Console.WriteLine($"We couldn't find any information about these packages({GrouppedPackages.WithNoMetadata.Count()}):{Environment.NewLine}");
+				foreach (var package in GrouppedPackages.WithNoMetadata)
+				{
+					Console.WriteLine($"{package.Id} {package.Version}");
+					_fileLogger.Information($"{package.Id} {package.Version}");
+				}
 			}
-		}
-
-		private void WriteInfo(IEnumerable<PackageReference> packages, string title, ConsoleColor consoleColor = ConsoleColor.White)
-		{
 		}
 	}
 }

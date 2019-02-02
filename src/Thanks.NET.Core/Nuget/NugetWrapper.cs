@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ThanksNET.Core.Extensions;
 using ThanksNET.Core.Logging;
 using ThanksNET.Core.Nuget.Packages;
 
@@ -23,7 +24,7 @@ namespace ThanksNET.Core.Nuget
 
 		private SourceRepository SourceRepository { get; }
 
-		public NugetWrapper()
+		public NugetWrapper(bool log = false)
 		{
 			List<Lazy<INuGetResourceProvider>> providers = new List<Lazy<INuGetResourceProvider>>();
 			providers.AddRange(Repository.Provider.GetCoreV3());  // Add v3 API support
@@ -33,7 +34,7 @@ namespace ThanksNET.Core.Nuget
 			// Setup SeriLog
 			_logger = new LoggerConfiguration()
 				.MinimumLevel.Information()
-				//.WriteTo.Console()
+				.WriteToIf(log, c => c.RollingFile("log-nuget.txt"))
 				.CreateLogger();
 
 			_nugetLogger = new NugetLogger(_logger);
