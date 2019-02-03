@@ -3,9 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.329
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thanks.NET.Core", "Thanks.NET.Core\ThanksNET.Core.csproj", "{270CBB00-ABBE-43A9-B00F-69A4008ABB6C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThanksNET.Core", "Thanks.NET.Core\ThanksNET.Core.csproj", "{270CBB00-ABBE-43A9-B00F-69A4008ABB6C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thanks.NET.ConsoleApp", "Thanks.NET.ConsoleApp\ThanksNET.ConsoleApp.csproj", "{BC925DB2-4C4B-4049-AC3E-A5F048528721}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThanksNET.ConsoleApp", "Thanks.NET.ConsoleApp\ThanksNET.ConsoleApp.csproj", "{BC925DB2-4C4B-4049-AC3E-A5F048528721}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{47213C29-019F-49F8-913A-C0A5055FD592}"
+	ProjectSection(SolutionItems) = preProject
+		..\.gitattributes = ..\.gitattributes
+		..\.gitignore = ..\.gitignore
+		..\README.md = ..\README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
