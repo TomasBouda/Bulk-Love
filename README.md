@@ -9,6 +9,8 @@ Run from console/powershell:
 ThanksNET.ConsoleApp -s C:\Path\To\Solution -t ***YOUR_GIRHUB_TOKEN***
 ```
 
+<img src="https://github.com/TomasBouda/Thanks.NET/blob/master/images/thanksnet.png">
+
 ### How to get github personal access token
 
 - Go to https://github.com/settings/tokens
