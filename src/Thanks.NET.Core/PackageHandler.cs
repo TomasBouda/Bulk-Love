@@ -146,6 +146,8 @@ namespace ThanksNET.Core
 					_fileLogger.Information($"{package.Id} {package.Version}");
 				}
 			}
+
+			Console.ForegroundColor = ConsoleColor.White;
 		}
 	}
 }

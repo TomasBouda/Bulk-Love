@@ -3,6 +3,7 @@ using Serilog;
 using Serilog.Exceptions;
 using Serilog.Formatting.Json;
 using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using ThanksNET.Core;
@@ -39,19 +40,15 @@ namespace ThanksNET.ConsoleApp
 
 		private static async Task StarAll(string solutionDirectory, string githubToken)
 		{
-			try
-			{
-				var handler = new PackageHandler(githubToken);
-				await handler.StarAllAsync(solutionDirectory);
+			if (string.IsNullOrEmpty(solutionDirectory))
+				throw new ArgumentException("Missing solution directory!", nameof(solutionDirectory));
+			if (!Directory.Exists(solutionDirectory))
+				throw new ArgumentException("Could not found solution directory!", nameof(solutionDirectory));
+			if (string.IsNullOrEmpty(githubToken))
+				throw new ArgumentException("Missing github token!", nameof(githubToken));
 
-				Environment.Exit((int)ExitCodes.Success);
-			}
-			catch (Exception ex)
-			{
-				Log.Error(ex, ex.Message);
-
-				Environment.Exit((int)ExitCodes.Error);
-			}
+			var handler = new PackageHandler(githubToken);
+			await handler.StarAllAsync(solutionDirectory);
 		}
 
 		private static async Task ParseArguments(string[] args)

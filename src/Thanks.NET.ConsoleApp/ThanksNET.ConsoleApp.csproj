@@ -15,7 +15,13 @@
 		<PackageLicenseUrl>https://github.com/TomasBouda/Thanks.NET/blob/master/LICENSE</PackageLicenseUrl>
 		<RepositoryUrl>https://github.com/TomasBouda/Thanks.NET</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
+		<ApplicationIcon>icon.ico</ApplicationIcon>
+		<SignAssembly>false</SignAssembly>
 	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Thanks.NET.Core\ThanksNET.Core.csproj" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="CommandLineParser" Version="2.4.3" />
@@ -23,10 +29,6 @@
 		<PackageReference Include="Serilog.Exceptions" Version="5.0.0" />
 		<PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
 		<PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.0" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<ProjectReference Include="..\Thanks.NET.Core\ThanksNET.Core.csproj" />
 	</ItemGroup>
 
 </Project>
