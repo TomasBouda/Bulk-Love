@@ -4,6 +4,7 @@ using Serilog.Formatting.Json;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using ThanksNET.Core.Extensions;
 using ThanksNET.Core.Github;
 using ThanksNET.Core.IO;
 using ThanksNET.Core.Nuget.Packages;
@@ -28,11 +29,11 @@ namespace ThanksNET.Core
 
 		public GrouppedPackages GrouppedPackages { get; private set; }
 
-		public PackageHandler(string githubToken)
+		public PackageHandler(string githubToken, bool log = true)
 		{
 			_fileLogger = new LoggerConfiguration()
 				.MinimumLevel.Information()
-				.WriteTo.RollingFile(new JsonFormatter(renderMessage: true), "log.json")
+				.WriteToIf(log, s => s.RollingFile(new JsonFormatter(renderMessage: true), "log.json"))
 				.CreateLogger();
 
 			Github = new GithubWrapper(githubToken);

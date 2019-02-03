@@ -92,7 +92,7 @@ namespace ThanksNET.ConsoleApp
 
 			try
 			{
-				var handler = new PackageHandler(githubToken);
+				var handler = new PackageHandler(githubToken, false);
 				await handler.StarAllAsync(solutionDirectory);
 			}
 			catch (Exception ex)
