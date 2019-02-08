@@ -2,22 +2,39 @@
 
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
-		<TargetFramework>netcoreapp2.1</TargetFramework>
+		<TargetFramework>netcoreapp2.2</TargetFramework>
 		<RuntimeIdentifiers>win10-x64;osx-x64;linux-x64</RuntimeIdentifiers>
 		<TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
 		<LangVersion>7.3</LangVersion>
-		<Product>ThanksNET</Product>
+		<PackAsTool>true</PackAsTool>
+		<ToolCommandName>Thanks.NET</ToolCommandName>
+		<PackageOutputPath>./nupkg</PackageOutputPath>
+		<Product>Thanks.NET</Product>
 		<Company>Tomáš Bouda</Company>
 		<Authors>Tomáš Bouda</Authors>
-		<PackageId>ThanksNET.ConsoleApp</PackageId>
-		<Description>Thanks.NET allows you to easily thank authors of packages you are using by staring their github repository.</Description>
+		<PackageId>Thanks.NET</PackageId>
+		<Description>Thanks.NET is utility that allows you to easily thank authors of packages you are using in your projects by staring their github repository.</Description>
 		<PackageProjectUrl>https://github.com/TomasBouda/Thanks.NET</PackageProjectUrl>
 		<PackageLicenseUrl>https://github.com/TomasBouda/Thanks.NET/blob/master/LICENSE</PackageLicenseUrl>
 		<RepositoryUrl>https://github.com/TomasBouda/Thanks.NET</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 		<ApplicationIcon>icon.ico</ApplicationIcon>
 		<SignAssembly>false</SignAssembly>
+		<Copyright>Tomáš Bouda</Copyright>
+		<PackageTags>package, packages, nuget, nuget-packages, git, star, repository, thankyou, thanks, dotnet</PackageTags>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="nupkg\**" />
+	  <EmbeddedResource Remove="nupkg\**" />
+	  <None Remove="nupkg\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="ThanksNET.ConsoleApp.1.0.0.nupkg" />
+	  <None Remove="warp-packer.exe" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\Thanks.NET.Core\ThanksNET.Core.csproj" />
