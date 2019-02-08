@@ -58,8 +58,10 @@ namespace ThanksNET.Core
 		/// <returns></returns>
 		public static async Task<bool> StarPackage(PackageReference package, string githubToken)
 		{
+			if (string.IsNullOrEmpty(githubToken))
+				throw new ArgumentException("You must provide valid github token!", nameof(githubToken));
 			if ((package.Metadata?.HasGithub == false && package.Metadata?.HasParsedGithub == false) || string.IsNullOrEmpty(package.Metadata?.GithubUrl))
-				throw new ArgumentException("Package must have github url!", nameof(package));
+				throw new Exception("Package must have github url!");
 
 			var github = new GithubWrapper(githubToken);
 			return await github.StarRepo(package.Metadata.GithubUrl);
@@ -104,8 +106,8 @@ namespace ThanksNET.Core
 				{
 					bool stared = await StarPackage(package);
 
-					Console.WriteLine($"{(stared ? "*" : "x")} {package.Metadata.Title} {package.Version} - {package.Metadata.GithubUrl}");
-					_fileLogger.Information($"{(stared ? "*" : "x")} {package.Metadata.Title} {package.Version} - {package.Metadata.GithubUrl}");
+					Console.WriteLine($"{(stared ? "*" : "x")} {package.Metadata.Title} [{package.Version}] by {package.Metadata.Authors} - {package.Metadata.GithubUrl}");
+					_fileLogger.Information($"{(stared ? "*" : "x")} {package.Metadata.Title} [{package.Version}] by {package.Metadata.Authors} - {package.Metadata.GithubUrl}");
 				}
 			}
 
@@ -118,8 +120,8 @@ namespace ThanksNET.Core
 				{
 					bool stared = await StarPackage(package);
 
-					Console.WriteLine($"{(stared ? "*" : "x")} {package.Metadata.Title} {package.Version} - {package.Metadata.GithubUrl} - {package.Metadata.ProjectUrl}");
-					_fileLogger.Information($"{(stared ? "*" : "x")} {package.Metadata.Title} {package.Version} - {package.Metadata.GithubUrl} - {package.Metadata.ProjectUrl}");
+					Console.WriteLine($"{(stared ? "*" : "x")} {package.Metadata.Title} [{package.Version}] by {package.Metadata.Authors} - {package.Metadata.GithubUrl} - {package.Metadata.ProjectUrl}");
+					_fileLogger.Information($"{(stared ? "*" : "x")} {package.Metadata.Title} [{package.Version}] by {package.Metadata.Authors} - {package.Metadata.GithubUrl} - {package.Metadata.ProjectUrl}");
 				}
 			}
 
@@ -130,8 +132,8 @@ namespace ThanksNET.Core
 				Console.WriteLine($"We couldn't find github url for these packages({GrouppedPackages.WithoutGithub.Count()}):{Environment.NewLine}");
 				foreach (var package in GrouppedPackages.WithoutGithub)
 				{
-					Console.WriteLine($"{package.Metadata.Title} {package.Version} - {package.Metadata.ProjectUrl}");
-					_fileLogger.Information($"{package.Metadata.Title} {package.Version} - {package.Metadata.ProjectUrl}");
+					Console.WriteLine($"{package.Metadata.Title} [{package.Version}] by {package.Metadata.Authors} - {package.Metadata.ProjectUrl}");
+					_fileLogger.Information($"{package.Metadata.Title} [{package.Version}] by {package.Metadata.Authors} - {package.Metadata.ProjectUrl}");
 				}
 			}
 

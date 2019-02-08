@@ -10,7 +10,7 @@ namespace ThanksNET.Core.Nuget.Packages
 	public class SimplePackageMetadata
 	{
 		public string Title { get; }
-		private string Authors { get; }
+		public string Authors { get; }
 		public string Tags { get; }
 		public string Summary { get; }
 		public Uri IconUrl { get; }
