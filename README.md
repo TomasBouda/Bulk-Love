@@ -1,6 +1,6 @@
 # Thanks.NET  [![NuGet](https://img.shields.io/nuget/v/Thanks.NET.svg)](https://www.nuget.org/packages/Thanks.NET/)
 
-Thanks.NET is utility that allows you to easily thank authors of packages you are using in your projects by staring their github repository.
+Thanks.NET is utility that allows you to easily :heartpulse:thank authors of packages you are using in your projects by :star:staring their github repository. It was inspired by Johnny Graber's <a href="https://improveandrepeat.com/2018/12/a-simple-way-to-thank-the-open-source-projects-you-depend-on/">blog post</a>.
 
 ## Installation
 
@@ -41,6 +41,17 @@ or none
 
 <img src="https://github.com/TomasBouda/Thanks.NET/blob/master/images/not_stared2.PNG">
 <img src="https://github.com/TomasBouda/Thanks.NET/blob/master/images/not_stared3.PNG">
+
+## Alternatives in other languages
+
+| Language | Project |
+|:-:|:-:|
+| Rust | <a href="https://github.com/softprops/cargo-thanks">cargo-thanks<a> |
+| Ruby | <a href="https://github.com/dpritchett/thanks-ruby">thanks-ruby<a> |
+| Node.js | <a href="https://github.com/feross/thanks">thanks<a> |
+| PHP | <a href="https://github.com/symfony/thanks">thanks<a> |
+  
+If you know about any other project, let me know :relaxed:
 
 ### How to get github personal access token
 
