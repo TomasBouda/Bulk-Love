@@ -328,3 +328,8 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+
+*.favdoc
+*.TaskCanvasSL
+
+/src/Thanks.NET.ConsoleApp/warp-packer.exe

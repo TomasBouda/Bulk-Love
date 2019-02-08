@@ -38,16 +38,26 @@ namespace ThanksNET.ConsoleApp
 			}
 		}
 
-		private static async Task StarAll(string solutionDirectory, string githubToken)
+		private static async Task StarAll(string solutionDirectory, string githubToken, bool log = true)
 		{
 			if (string.IsNullOrEmpty(solutionDirectory))
-				throw new ArgumentException("Missing solution directory!", nameof(solutionDirectory));
-			if (!Directory.Exists(solutionDirectory))
-				throw new ArgumentException("Could not found solution directory!", nameof(solutionDirectory));
-			if (string.IsNullOrEmpty(githubToken))
-				throw new ArgumentException("Missing github token!", nameof(githubToken));
+			{
+				Console.WriteLine("Missing solution directory!");
+				Environment.Exit((int)ExitCodes.MissingArguments);
+			}
 
-			var handler = new PackageHandler(githubToken);
+			if (!Directory.Exists(solutionDirectory))
+			{
+				Console.WriteLine("Could not found solution directory!");
+				Environment.Exit((int)ExitCodes.MissingArguments);
+			}
+			if (string.IsNullOrEmpty(githubToken))
+			{
+				Console.WriteLine("Missing github token!");
+				Environment.Exit((int)ExitCodes.MissingArguments);
+			}
+
+			var handler = new PackageHandler(githubToken, log);
 			await handler.StarAllAsync(solutionDirectory);
 		}
 
@@ -58,8 +68,7 @@ namespace ThanksNET.ConsoleApp
 			{
 				try
 				{
-					var handler = new PackageHandler(o.GithubToken);
-					await handler.StarAllAsync(o.SolutionDirectory);
+					await StarAll(o.SolutionDirectory, o.GithubToken);
 
 					Environment.Exit((int)ExitCodes.Success);
 				}
@@ -89,8 +98,7 @@ namespace ThanksNET.ConsoleApp
 
 			try
 			{
-				var handler = new PackageHandler(githubToken, false);
-				await handler.StarAllAsync(solutionDirectory);
+				await StarAll(solutionDirectory, githubToken, false);
 			}
 			catch (Exception ex)
 			{
