@@ -87,7 +87,7 @@ namespace ThanksNET.Core
 		{
 			_fileLogger.Information($"Solution: {solutionDirectory}");
 
-			Console.ForegroundColor = ConsoleColor.Blue;
+			Console.ForegroundColor = ConsoleColor.Cyan;
 			Console.WriteLine(TITLE_ASCII);
 			Console.WriteLine("-----------------------------------------------------");
 			Console.Write("Searching packages... ");

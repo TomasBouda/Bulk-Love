@@ -1,15 +1,28 @@
-# Thanks.NET
+# Thanks.NET  [![NuGet](https://img.shields.io/nuget/v/Thanks.NET.svg)](https://www.nuget.org/packages/Thanks.NET/)
 
 Thanks.NET is utility that allows you to easily thank authors of packages you are using in your projects by staring their github repository.
 
+## Installation
+
+**.NET Core Global Tool**
+
+Run from console:
+
+```shell
+dotnet tool install --global Thanks.NET
+```
+
 ## Usage
 
-Run from console/powershell:
+Once installed you can run following from console/powershell:
+
 ```shell
-ThanksNET.ConsoleApp -s C:\Path\To\Solution -t ***YOUR_GIRHUB_TOKEN***
+thanks.net -s C:\Path\To\Solution -t ***YOUR_GIRHUB_TOKEN***
 ```
 
 <img src="https://github.com/TomasBouda/Thanks.NET/blob/master/images/thanksnet.png">
+
+You can also run just `thanks.net` and application will ask you for parameters.
 
 ### How to get github personal access token
 
