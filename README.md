@@ -50,6 +50,7 @@ or none
 | Ruby | <a href="https://github.com/dpritchett/thanks-ruby">thanks-ruby<a> |
 | Node.js | <a href="https://github.com/feross/thanks">thanks<a> |
 | PHP | <a href="https://github.com/symfony/thanks">thanks<a> |
+| JavaScript | <a href="https://github.com/paulcbetts/thanks">paulcbetts/thanks</a> |
   
 If you know about any other project, let me know :relaxed:
 
